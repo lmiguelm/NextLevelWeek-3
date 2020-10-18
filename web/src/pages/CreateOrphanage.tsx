@@ -7,6 +7,7 @@ import { FiPlus } from "react-icons/fi";
 import '../styles/pages/create-orphanage.css';
 
 import Sidebar from "../components/Sidebar";
+import Input from '../components/form/Input';
 
 import mapIcon from '../utils/mapIcon';
 import api from "../services/api";
@@ -102,10 +103,13 @@ export default function CreateOrphanage() {
               { position.latitude !== 0 && <Marker interactive={false} icon={mapIcon} position={[position.latitude, position.longitude]} /> }
             </Map>
 
-            <div className="input-block">
+            <Input
+              id="name" 
+              value={name} 
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+            >
               <label htmlFor="name">Nome</label>
-              <input id="name" value={name} onChange={e => setName(e.target.value)} />
-            </div>
+            </Input>
 
             <div className="input-block">
               <label htmlFor="about">Sobre <span>Máximo de 300 caracteres</span></label>
@@ -138,11 +142,14 @@ export default function CreateOrphanage() {
               <label htmlFor="instructions">Instruções</label>
               <textarea id="instructions" value={instructions} onChange={e => setInstructions(e.target.value)} />
             </div>
-
-            <div className="input-block">
+            
+            <Input
+              id="opening_hours" 
+              value={opening_hours} 
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setOpening_hours(e.target.value)}
+            >
               <label htmlFor="opening_hours">Horário de funcionamento</label>
-              <input id="opening_hours" value={opening_hours} onChange={e => setOpening_hours(e.target.value)} />
-            </div>
+            </Input>
 
             <div className="input-block">
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
