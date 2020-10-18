@@ -8,9 +8,10 @@ import '../styles/components/sidebar.css';
 
 interface SidebarProps {
   logged: boolean;
+  screen?: Function | any;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ logged }) => {
+const Sidebar: React.FC<SidebarProps> = ({ logged, screen }) => {
 
   const { goBack } = useHistory();
 
@@ -20,12 +21,12 @@ const Sidebar: React.FC<SidebarProps> = ({ logged }) => {
 
       { logged ? (
         <div className="control-panel">
-          <button type="button" style={{ marginBottom: '10px' }}>
-            <FiAlertCircle size={24} color="#FFF" />
+          <button type="button" style={{ marginBottom: '10px' }} onClick={() => screen(true)}> 
+            <FiMapPin size={24} color="#FFF" />
           </button>
 
-          <button type="button"> 
-            <FiMapPin size={24} color="#FFF" />
+          <button type="button" onClick={() => screen(false)} >
+            <FiAlertCircle size={24} color="#FFF" />
           </button>
         </div>
       ) : (

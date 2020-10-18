@@ -38,7 +38,8 @@ aside.app-sidebar    {
     align-items: center;
   }
   
-  aside.app-sidebar  footer a:hover,
-  aside.app-sidebar  footer button:hover {
-    background: #17D6EB;
-  }
+aside.app-sidebar  footer a:hover,
+aside.app-sidebar  footer button:hover,
+aside.app-sidebar .control-panel button:hover {
+  background: #17D6EB;
+}
