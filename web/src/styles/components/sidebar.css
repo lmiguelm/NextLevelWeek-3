@@ -13,9 +13,14 @@ aside.app-sidebar    {
   aside.app-sidebar  img {
     width: 48px;
   }
+
+  aside.app-sidebar .control-panel {
+    display: flex;
+    flex-direction: column
+  }
   
   aside.app-sidebar  footer a,
-  aside.app-sidebar  footer button {
+  aside.app-sidebar  footer button, aside.app-sidebar .control-panel button {
     width: 48px;
     height: 48px;
   

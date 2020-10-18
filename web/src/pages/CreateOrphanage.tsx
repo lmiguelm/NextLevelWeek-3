@@ -85,7 +85,7 @@ export default function CreateOrphanage() {
   return (
     <div id="page-create-orphanage">
 
-      <Sidebar/>
+      <Sidebar logged={false}/>
       
       <main>
         <form onSubmit={handleSubmit} className="create-orphanage-form">
