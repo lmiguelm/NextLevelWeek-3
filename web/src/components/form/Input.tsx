@@ -6,13 +6,14 @@ interface InputProps {
   id: string;
   value: string;
   onChange: any;
+  type?: string;
 }
 
-const Input: React.FC<InputProps> = ({ children, id, value, onChange }) => {
+const Input: React.FC<InputProps> = ({ children, id, value, type, onChange }) => {
   return (
     <div className="input-block">
       {children}
-      <input id={id} type="text" value={value}  onChange={onChange} />
+      <input id={id} type={type || 'text'} value={value}  onChange={onChange} />
     </div>
   );
 }

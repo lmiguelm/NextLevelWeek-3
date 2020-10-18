@@ -34,6 +34,7 @@ const ResetPassword = () => {
         <form onSubmit={handleSubmit} className="form-reset-password">
           <Input
             id="newPass"
+            type="password"
             value={newPassword}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
           >

@@ -47,6 +47,7 @@ export default function Login() {
 
           <Input
             id="pass"
+            type="password"
             value={password}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           >
