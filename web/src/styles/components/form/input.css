@@ -1,0 +1,24 @@
+.input-block + .input-block {
+  margin-top: 24px;
+}
+
+.input-block input {
+  width: 100%;
+  background: #F5F8FA;
+  border: 1px solid #D3E2E5;
+  border-radius: 20px;
+  outline: none;
+  color: #5C8599;
+}
+
+.input-block input {
+  height: 64px;
+  padding: 0 16px;
+}
+
+.input-block label {
+  display: flex;
+  color: #8FA7B3;
+  margin-bottom: 8px;
+  line-height: 24px;
+}
