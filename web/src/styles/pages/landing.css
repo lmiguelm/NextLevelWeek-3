@@ -42,22 +42,45 @@
     line-height: 34px;
 }
 
-.content-wrapper .location {
+.content-wrapper .superior-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-wrapper .superior-container .location {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper .superior-container .location  strong {
+    font-weight: 800;
+}
+
+.content-wrapper .enter-restrict {
     position: absolute;
     right: 0;
     top: 0;
 
-    font-size: 24px;
-    line-height: 24px;
+    width: 222px;
+    height: 56px;
+    background: #12D4E0;
+    border-radius: 20px;
+
+    text-decoration: none;
+    color: #fff;
 
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    text-align: right;
+    transition: 0.2s;
 }
 
-.content-wrapper .location strong {
-    font-weight: 800;
+.content-wrapper .enter-restrict:hover {
+    background: #96FEFF;
+    color: #15C3D6;
 }
 
 .content-wrapper .enter-app {

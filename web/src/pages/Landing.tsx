@@ -10,17 +10,24 @@ export default function Landing() {
     return(
         <div id="page-landing">
             <div className="content-wrapper">
-                <img src={logoImg} alt="happy"/>
+                <div className="superior-container">
+                    <img src={logoImg} alt="happy"/>
+
+                    <div className="location">
+                        <strong>Araraquara</strong>
+                        <span>São Paulo</span>
+                    </div>
+                </div>
 
                 <main>
-                <h1>Leve felicidade para o mundo</h1>
-                <p>Visite orfanatos e mude o dia de muitas crianças.</p>
+                    <h1>Leve felicidade para o mundo</h1>
+                    <p>Visite orfanatos e mude o dia de muitas crianças.</p>
                 </main>
 
-                <div className="location">
-                    <strong>Araraquara</strong>
-                    <span>São Paulo</span>
-                </div>
+                <Link to="/login" className="enter-restrict"> 
+                    Acesso restrito
+                </Link>
+
 
                 <Link to="/app" className="enter-app"> 
                     <FiArrowRight size={26} color="rgba(0,0,0,0.6)" />
