@@ -1,0 +1,61 @@
+#delete-orphanage-success {
+  height: 100vh;
+  width: 100vw;
+
+  background: #FF669D;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  padding: 250px;
+}
+
+#delete-orphanage-success .text-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#delete-orphanage-success .text-container h2 {
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 80px;
+  color: #fff;
+  margin-bottom: 40px;
+}
+#delete-orphanage-success .text-container p {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 34px;
+  color: #fff;
+  text-align: center;
+  max-width: 450px;
+  margin-bottom: 60px;
+}
+#delete-orphanage-success .text-container button {
+  margin-top: 30px;
+
+  width: 300px;
+  height: 64px;
+  border: 0;
+  cursor: pointer;
+  background: #D6487B;
+  border-radius: 20px;
+  color: #FFFFFF;
+
+  font-weight: 800;
+  font-size: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: background-color 0.2s;
+}
+
+
+#delete-orphanage-success .text-container button:hover {
+  background: #E4588A;
+}

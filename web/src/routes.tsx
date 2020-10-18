@@ -9,6 +9,9 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
+import CreateOrphanageSuccess from './pages/feedback/CreateOrphanageSuccess';
+import DeleteOrphanageSuccess from './pages/feedback/DeleteOrphanageSuccess';
+
 export default function Routes() {
     return(
         <BrowserRouter>
@@ -23,6 +26,9 @@ export default function Routes() {
                 <Route path="/login" component={Login} />
                 <Route path="/forgot-password" component={ForgotPassword} />
                 <Route path="/reset-password" component={ResetPassword} />
+
+                <Route path="/orphanage-created" component={CreateOrphanageSuccess} />
+                <Route path="/orphanage-deleted" component={DeleteOrphanageSuccess} />
             </Switch>
         </BrowserRouter>
     );
