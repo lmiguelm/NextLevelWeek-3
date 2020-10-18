@@ -8,10 +8,12 @@ import '../styles/pages/create-orphanage.css';
 
 import Sidebar from "../components/Sidebar";
 import Input from '../components/form/Input';
+import ButtonForm from '../components/form/Button';
 
 import mapIcon from '../utils/mapIcon';
 import api from "../services/api";
 import { useHistory } from "react-router-dom";
+import Button from "../components/form/Button";
 
 export default function CreateOrphanage() {
 
@@ -160,10 +162,9 @@ export default function CreateOrphanage() {
               </div>
             </div>
           </fieldset>
-
-          <button className="confirm-button" type="submit">
-            Confirmar
-          </button>
+          
+          <ButtonForm text="Confirmar" />
+         
         </form>
       </main>
     </div>

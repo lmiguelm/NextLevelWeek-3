@@ -7,6 +7,7 @@ import '../styles/pages/login.css';
 import Wallpaper from '../components/Wallpaper';
 import BackButton from '../components/BackButton';
 import Input from '../components/form/Input';
+import ButtonForm from '../components/form/Button';
 
 export default function Login() {
 
@@ -66,12 +67,10 @@ export default function Login() {
               <span>Lembrar me</span>
             </div>
 
-            <Link to="/">Esqueci minha senha</Link>
+            <Link to="/forgot-password">Esqueci minha senha</Link>
           </div>
 
-          <button className="login-button" type="submit">
-            Entrar
-          </button>
+          <ButtonForm text="Entrar"/>
         </form>     
       </main>
     </div>
