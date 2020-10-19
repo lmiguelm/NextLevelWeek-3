@@ -31,7 +31,7 @@ const Orphanages = () => {
     <div id="orphanages-page">
       <div className="text-container">
         <h2>Orfanatos Cadastrados</h2>
-        <span>{orphanages.length} Orfanatos</span>
+        <span>{orphanages.length} Orfanato(s)</span>
       </div>
 
       <hr/>
