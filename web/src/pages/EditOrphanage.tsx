@@ -14,6 +14,7 @@ import Sidebar from "../components/Sidebar";
 import '../styles/pages/orphanage.css';
 
 import api from '../services/api';
+import Loading from '../components/Loading';
 
 interface Orphanage {
   id: number;
@@ -47,6 +48,7 @@ const EditOrphanage = ( ) => {
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [position,  setPosition] = useState({latitude: 0, longitude: 0});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadOrphanage() {
@@ -96,7 +98,9 @@ const EditOrphanage = ( ) => {
     });
   }
 
-  if(!orphanage) {
+  if(loading) {
+    return <Loading text="Carregando dados do orfanato ..."/>
+  } else if(!orphanage) {
     return (
       <p>carregando...</p>
     );
