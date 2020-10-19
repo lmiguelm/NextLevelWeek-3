@@ -1,4 +1,5 @@
 div.app-wallpaper {
+  position: relative;
   height: 100vh;
   width: 60vw;
   padding: 32px 24px;

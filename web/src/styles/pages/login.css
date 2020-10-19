@@ -10,8 +10,7 @@
 form.login-form {
 
   width: 700px;
-  margin: 64px auto;
-
+  
   background: #FFFFFF;
   border-radius: 20px;
 
@@ -29,12 +28,6 @@ form.login-form h2{
   margin-bottom: 42px;
 }
 
-
-
-form.login-form .input-block input {
-  height: 64px;
-  padding: 0 16px;
-}
 
 form.login-form .footer-form {
 
