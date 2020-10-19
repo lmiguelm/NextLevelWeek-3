@@ -12,6 +12,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
 import Dashboard from './pages/Dashboard';
+import EditOrphanage from './pages/EditOrphanage';
 
 import CreateOrphanageSuccess from './pages/feedback/CreateOrphanageSuccess';
 import DeleteOrphanageSuccess from './pages/feedback/DeleteOrphanageSuccess';
@@ -32,6 +33,7 @@ export default function Routes() {
                 <Route path="/reset-password" component={ResetPassword} />
 
                 <Route path="/dashboard" component={Dashboard} />
+                <Route path="/orphanage-edit/:id" component={EditOrphanage} />
 
                 <Route path="/orphanage-created" component={CreateOrphanageSuccess} />
                 <Route path="/orphanage-deleted" component={DeleteOrphanageSuccess} />

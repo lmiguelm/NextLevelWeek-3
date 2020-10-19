@@ -1,4 +1,4 @@
-import React, { FormEvent, SyntheticEvent, useState, ChangeEvent } from "react";
+import React, { FormEvent, useState, ChangeEvent } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 
@@ -7,13 +7,11 @@ import { FiPlus } from "react-icons/fi";
 import '../styles/pages/create-orphanage.css';
 
 import Sidebar from "../components/Sidebar";
-import Input from '../components/form/Input';
 import ButtonForm from '../components/form/Button';
 
 import mapIcon from '../utils/mapIcon';
 import api from "../services/api";
 import { useHistory } from "react-router-dom";
-import Button from "../components/form/Button";
 
 export default function CreateOrphanage() {
 
@@ -73,19 +71,21 @@ export default function CreateOrphanage() {
       return;
     }
     const selectedImagages = Array.from(event.target.files);
-    setImages(selectedImagages);
+    setImages([...images, selectedImagages[0]]);
 
     const selectedImagesPreview = selectedImagages.map(image => {
       return URL.createObjectURL(image);
     })
 
-    setPreviewImages(selectedImagesPreview);
+    let imgs = previewImages;
+    imgs.push(selectedImagesPreview[0]);
+    setPreviewImages(imgs);
   }
 
   return (
     <div id="page-create-orphanage">
 
-      <Sidebar logged={false}/>
+      <Sidebar dashboard={false}/>
       
       <main>
         <form onSubmit={handleSubmit} className="create-orphanage-form">
@@ -105,13 +105,10 @@ export default function CreateOrphanage() {
               { position.latitude !== 0 && <Marker interactive={false} icon={mapIcon} position={[position.latitude, position.longitude]} /> }
             </Map>
 
-            <Input
-              id="name" 
-              value={name} 
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-            >
+            <div className="input-block">
               <label htmlFor="name">Nome</label>
-            </Input>
+              <input id="name" value={name} onChange={e => setName(e.target.value)} />
+            </div>
 
             <div className="input-block">
               <label htmlFor="about">Sobre <span>Máximo de 300 caracteres</span></label>
@@ -144,14 +141,11 @@ export default function CreateOrphanage() {
               <label htmlFor="instructions">Instruções</label>
               <textarea id="instructions" value={instructions} onChange={e => setInstructions(e.target.value)} />
             </div>
-            
-            <Input
-              id="opening_hours" 
-              value={opening_hours} 
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setOpening_hours(e.target.value)}
-            >
+
+            <div className="input-block">
               <label htmlFor="opening_hours">Horário de funcionamento</label>
-            </Input>
+              <input id="opening_hours" value={opening_hours} onChange={e => setOpening_hours(e.target.value)} />
+            </div>
 
             <div className="input-block">
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
@@ -162,9 +156,8 @@ export default function CreateOrphanage() {
               </div>
             </div>
           </fieldset>
-          
-          <ButtonForm text="Confirmar" />
-         
+
+          <ButtonForm text="Enviar"/>
         </form>
       </main>
     </div>

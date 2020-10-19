@@ -50,7 +50,7 @@ export default function Orphanage() {
   return (
     <div id="page-orphanage">
       
-      <Sidebar logged={false}/>
+      <Sidebar dashboard={false}/>
 
       <main>
         <div className="orphanage-details">

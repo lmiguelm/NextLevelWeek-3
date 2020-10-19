@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   return (
     <div id="page-dashboard">
-      <Sidebar logged={true} screen={(callback: boolean) => setFlag(callback)} />
+      <Sidebar dashboard={true} screen={(callback: boolean) => setFlag(callback)} />
 
       { flag ? (
         <Orphanages/>

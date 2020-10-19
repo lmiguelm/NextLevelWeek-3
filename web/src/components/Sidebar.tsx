@@ -7,11 +7,11 @@ import mapMarkerImg from '../images/map-marker.svg';
 import '../styles/components/sidebar.css';
 
 interface SidebarProps {
-  logged: boolean;
+  dashboard: boolean;
   screen?: Function | any;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ logged, screen }) => {
+const Sidebar: React.FC<SidebarProps> = ({ dashboard, screen }) => {
 
   const { goBack } = useHistory();
 
@@ -19,7 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ logged, screen }) => {
     <aside className="app-sidebar">
       <img src={mapMarkerImg} alt="Happy" />
 
-      { logged ? (
+      { dashboard ? (
         <div className="control-panel">
           <button type="button" style={{ marginBottom: '10px' }} onClick={() => screen(true)}> 
             <FiMapPin size={24} color="#FFF" />
@@ -36,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({ logged, screen }) => {
       ) }
 
       <footer>
-          { logged ? (
+          { dashboard ? (
             <button type="button" onClick={goBack}>
               <FiPower size={24} color="#FFF" />
             </button>
