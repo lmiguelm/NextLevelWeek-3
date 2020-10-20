@@ -1,5 +1,5 @@
 import React, {useState, useEffect, FormEvent, ChangeEvent} from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { FiPlus } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { LeafletMouseEvent } from 'leaflet';
@@ -23,11 +23,11 @@ interface Orphanage {
   instructions: string;
   latitude: number;
   longitude: number;
-  opening_hours: string,
-  open_on_weekends: boolean
+  opening_hours: string;
+  open_on_weekends: boolean;
   images: Array<{
-    url: string,
-    id: number
+    url: string;
+    id: number;
   }>
 }
 
@@ -42,9 +42,21 @@ interface Image {
 
 const EditOrphanage = ( ) => {
 
+  const history = useHistory();
   const params = useParams<OrphanageParams>();
 
-  const [orphanage, setOrphanage] = useState<Orphanage>();
+  const [orphanage, setOrphanage] = useState<Orphanage>({
+    id: 0,
+    name: '',
+    about: '',
+    instructions: '',
+    latitude: 0,
+    longitude: 0,
+    opening_hours: '',
+    open_on_weekends: false,
+    images: []
+  });
+
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [position,  setPosition] = useState({latitude: 0, longitude: 0});
@@ -52,16 +64,23 @@ const EditOrphanage = ( ) => {
 
   useEffect(() => {
     async function loadOrphanage() {
-      const res = await api.get<Orphanage>(`orphanages/${params.id}`);
-      setOrphanage(res.data);
+      setLoading(true);
 
-      setPosition({latitude: res.data.latitude, longitude: res.data.longitude});
+      try { 
+        const res = await api.get<Orphanage>(`orphanages/${params.id}`);
+        setOrphanage(res.data);
 
-      let imgs: string[] = [];
-      res.data.images.forEach((image: Image ) => {
-        imgs.push(image.url);
-      });
-      setPreviewImages(imgs);
+        setPosition({latitude: res.data.latitude, longitude: res.data.longitude});
+
+        let imgs: string[] = [];
+        res.data.images.forEach((image: Image ) => {
+          imgs.push(image.url);
+        });
+        setPreviewImages(imgs);
+        setLoading(false);
+      } catch (err) {
+        history.push('/not-found');
+      } 
     }
     loadOrphanage();
   }, []);
@@ -100,10 +119,6 @@ const EditOrphanage = ( ) => {
 
   if(loading) {
     return <Loading text="Carregando dados do orfanato ..."/>
-  } else if(!orphanage) {
-    return (
-      <p>carregando...</p>
-    );
   } else {
 
     return (
