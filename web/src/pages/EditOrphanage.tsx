@@ -48,7 +48,7 @@ const EditOrphanage = ( ) => {
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [position,  setPosition] = useState({latitude: 0, longitude: 0});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadOrphanage() {

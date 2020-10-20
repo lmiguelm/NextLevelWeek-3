@@ -1,11 +1,11 @@
-import React from 'react';
+import React,{ ChangeEvent }  from 'react';
 
 import '../../styles/components/form/input.css';
 
 interface InputProps {
   id: string;
   value: string;
-  onChange: any;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
 }
 

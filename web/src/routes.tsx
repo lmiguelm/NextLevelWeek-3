@@ -17,6 +17,8 @@ import EditOrphanage from './pages/EditOrphanage';
 import CreateOrphanageSuccess from './pages/feedback/CreateOrphanageSuccess';
 import DeleteOrphanageSuccess from './pages/feedback/DeleteOrphanageSuccess';
 
+import NotFound from './pages/NotFound';
+
 export default function Routes() {
     return(
         <BrowserRouter>
@@ -37,6 +39,8 @@ export default function Routes() {
 
                 <Route path="/orphanage-created" component={CreateOrphanageSuccess} />
                 <Route path="/orphanage-deleted" component={DeleteOrphanageSuccess} />
+
+                <Route  path="*" component={NotFound} />
             </Switch>
         </BrowserRouter>
     );
