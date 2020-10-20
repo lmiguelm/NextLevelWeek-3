@@ -7,6 +7,7 @@ import '../../styles/components/dashboard/orphanages.css';
 import mapIcon from '../../utils/mapIcon';
 
 import api from '../../services/api';
+import { Link, useHistory } from 'react-router-dom';
 
 interface Orphanage {
   latitude: number;
@@ -62,9 +63,9 @@ const Orphanages = () => {
                 <span>{orphanage.name}</span>
 
                 <div className="control-panel">
-                  <button style={{ marginRight: '10px' }}>
+                  <Link to={`orphanage-edit/${orphanage.id}`} style={{ marginRight: '10px' }}>
                     <FiEdit3 size={24} color="#15C3D6" />
-                  </button>
+                  </Link>
                   <button>
                     <FiTrash size={24} color="#15C3D6" />
                   </button>

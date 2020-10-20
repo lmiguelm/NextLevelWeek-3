@@ -11,8 +11,7 @@ const NotFound = () => {
       <Lottie
         options={{
           autoplay: true,
-          loop: false,
-
+          loop: true,
           animationData: Gif
         }}
         height="500px"
