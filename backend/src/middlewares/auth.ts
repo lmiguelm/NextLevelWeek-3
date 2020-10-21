@@ -9,7 +9,7 @@ interface IRequest extends Request {
 export default async function(req: IRequest, res: Response, next: NextFunction){
   try {
     const privateRoutes = [
-      '/dashboard'
+      '/pending-orphanages'
     ];
     
     const url = req.url;
