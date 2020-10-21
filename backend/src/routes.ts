@@ -1,4 +1,6 @@
 import { Router } from 'express';
+
+import authMiddleware from './middlewares/auth';
 import multer from 'multer';
 
 import uploadConfig from './config/upload';
@@ -7,6 +9,7 @@ import OrphanagesController from './controllers/OrphanagesController';
 import UserController from './controllers/UserController';
 
 const routes = Router();
+routes.use(authMiddleware as any);
 const upload = multer(uploadConfig);
 
 routes.get('/orphanages', OrphanagesController.index);
