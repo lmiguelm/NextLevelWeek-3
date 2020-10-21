@@ -9,6 +9,9 @@ import errorHandler from './errors/handler';
 import cors from 'cors';
 import path from 'path';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const app = express();
 
 app.use(cors());
