@@ -6,7 +6,7 @@ export class changeOrphanages1603315453276 implements MigrationInterface {
         await queryRunner.addColumn('orphanages', new TableColumn({
             name: 'pending',
             type: 'bolean',
-            default: false
+            default: true
         }));
     }
 

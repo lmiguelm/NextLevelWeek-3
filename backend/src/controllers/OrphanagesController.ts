@@ -4,6 +4,7 @@ import OrphanageView from '../views/OrphanagesView';
 import * as Yup from 'yup';
 
 import Orphanages from '../models/Orphanage';
+import OrphanagesView from '../views/OrphanagesView';
 
 export default {
     async index(req: Request, res: Response) {
@@ -21,6 +22,28 @@ export default {
             relations: ['images']
         });
         res.json(OrphanageView.render(orphanage));
+    },
+
+    async getPendings(req: Request, res: Response) {
+        const orphanagesRepository = getRepository(Orphanages);
+        const orphanages = await orphanagesRepository.find({
+            relations: ['images'],
+            where: { 
+                pending: true
+            }
+        })
+        res.json(OrphanageView.renderMany(orphanages));
+    },
+
+    async getApproveds(req: Request, res: Response) {
+        const orphanagesRepository = getRepository(Orphanages);
+        const orphanages = await orphanagesRepository.find({
+            relations: ['images'],
+            where: { 
+                pending: false
+            }
+        })
+        res.json(OrphanageView.renderMany(orphanages));
     },
 
     async create(req: Request, res: Response) {
