@@ -22,7 +22,7 @@ const Orphanages = () => {
 
   useEffect(() => {
     async function loadOrphanages() {
-      const res = await api.get<Orphanage[]>('orphanages');
+      const res = await api.get<Orphanage[]>('approved-orphanages');
       setOrphanages(res.data);
     }
     loadOrphanages();

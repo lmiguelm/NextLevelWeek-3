@@ -23,11 +23,17 @@ const OrphanagesPending = () => {
 
   useEffect(() => {
     async function loadOrphanages() {
-      const res = await api.get<Orphanage[]>('orphanages');
+      const res = await api.get<Orphanage[]>('pending-orphanages');
       setOrphanages(res.data);
     }
     loadOrphanages();
   }, []);
+
+  async function handleApprovedOrphanage(id: number) {
+    await api.post(`approved-orphanages/${id}`);
+    setOrphanages(orphanages.filter(o => o.id !== id));
+    alert('Orfanato aprovado com sucesso!');
+  }
 
   if(orphanages.length === 0) {
     return (
@@ -74,7 +80,7 @@ const OrphanagesPending = () => {
                 <div className="map-footer">
                   <span>{orphanage.name}</span>
 
-                  <button style={{ marginRight: '10px' }}>
+                  <button onClick={() => handleApprovedOrphanage(orphanage.id)} style={{ marginRight: '10px' }}>
                     <FiArrowRight size={24} color="#15C3D6" />
                   </button>
                 </div>
