@@ -22,8 +22,7 @@ routes.put('/edit-orphanages/:id', upload.array('images'), OrphanagesController.
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.create);
 
-
-
 routes.post('/login', AuthController.login);
+routes.post('/authenticate-token', AuthController.authenticateToken);
 
 export default routes;
