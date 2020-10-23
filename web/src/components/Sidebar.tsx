@@ -9,9 +9,10 @@ import '../styles/components/sidebar.css';
 interface SidebarProps {
   dashboard: boolean;
   screen?: Function | any;
+  signOut?: Function | any;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ dashboard, screen }) => {
+const Sidebar: React.FC<SidebarProps> = ({ dashboard, screen, signOut }) => {
 
   const { goBack } = useHistory();
 
@@ -37,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({ dashboard, screen }) => {
 
       <footer>
           { dashboard ? (
-            <button type="button" onClick={goBack}>
+            <button type="button" onClick={() => signOut()}>
               <FiPower size={24} color="#FFF" />
             </button>
           ) : (

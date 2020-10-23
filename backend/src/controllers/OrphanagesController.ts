@@ -183,5 +183,13 @@ export default {
         await orphanagesRepository.save(orphanage);
 
        return res.status(200).json(orphanage);
+    },
+
+    async approved(req: Request, res: Response) {
+        const { id } = req.params;
+        
+        const orphanagesRepository = getRepository(Orphanages);
+        await orphanagesRepository.update(id, { pending: false });
+        return res.send();
     }
 };

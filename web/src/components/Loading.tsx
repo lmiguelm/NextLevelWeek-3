@@ -2,7 +2,6 @@ import React from 'react';
 import Lottie from 'react-lottie';
 
 import sun from '../images/lottie/35627-weather-day-clear-sky.json';
-import moon from '../images/lottie/35781-weather-night-clear-sky.json';
 
 import '../styles/components/loading.css';
 

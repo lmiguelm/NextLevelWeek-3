@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom';
 
 import Landing from './pages/Landing';
 
@@ -19,10 +19,34 @@ import DeleteOrphanageSuccess from './pages/feedback/DeleteOrphanageSuccess';
 
 import NotFound from './pages/NotFound';
 
+import { useAuth } from './contexts/auth';
+
+
+const PrivateRoute = ({ component: Component, ...rest }: any ) => {
+
+    const { signed } = useAuth();
+    console.log(signed);
+
+    return (
+        <Route 
+            {...rest}
+            render={props => 
+                signed ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to={{ pathname: '/login' }} />
+                )
+            }
+        />
+    )
+}
+
 export default function Routes() {
     return(
         <BrowserRouter>
             <Switch>
+                <PrivateRoute path="/dashboard" component={Dashboard} />
+
                 <Route exact path="/" component={Landing} />
                 <Route path="/app" component={OrphanagesMap} />
 
@@ -34,7 +58,6 @@ export default function Routes() {
                 <Route path="/forgot-password" component={ForgotPassword} />
                 <Route path="/reset-password" component={ResetPassword} />
 
-                <Route path="/dashboard" component={Dashboard} />
                 <Route path="/orphanage-edit/:id" component={EditOrphanage} />
 
                 <Route path="/orphanage-created" component={CreateOrphanageSuccess} />

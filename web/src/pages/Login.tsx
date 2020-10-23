@@ -9,7 +9,11 @@ import BackButton from '../components/BackButton';
 import Input from '../components/form/Input';
 import ButtonForm from '../components/form/Button';
 
+import { useAuth } from '../contexts/auth';
+
 export default function Login() {
+
+  const { sign } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,6 +21,13 @@ export default function Login() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
+    try {
+      sign(email, password, remember);
+    } catch (err) {
+      console.log(err);
+    }
+
 
     console.log({
       email,

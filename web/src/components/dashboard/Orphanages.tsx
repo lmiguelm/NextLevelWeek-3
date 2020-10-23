@@ -7,7 +7,7 @@ import '../../styles/components/dashboard/orphanages.css';
 import mapIcon from '../../utils/mapIcon';
 
 import api from '../../services/api';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface Orphanage {
   latitude: number;
