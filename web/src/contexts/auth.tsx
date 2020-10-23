@@ -4,6 +4,8 @@ import * as auth from '../services/auth';
 
 import api from '../services/api';
 
+import history from '../routes/history'
+
 interface AuthContextData {
   signed: boolean;
   user: object;
@@ -14,70 +16,61 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC = ({ children }): any => {
 
-  // const [user, setUser] = useState({});
-  // const [signed, setSigned] = useState(false);
+  const [user, setUser] = useState({});
+  const [signed, setSigned] = useState(false);
 
-  // useEffect(() => {
-  //  async function loadStorageData() {
-  //   const tokenStorage = localStorage.getItem('@HappyAuth:token');
-  //   const userStorage = localStorage.getItem('@HappyAuth:user');
+  useEffect(() => {
+    async function loadStorageData() {
 
-  //   if(tokenStorage && userStorage) {
-  //     setUser(userStorage);
-  //     setSigned(true);
+      const tokenLocalStorage = localStorage.getItem('@HappyAuth:token');
+      const userLocalStorage = localStorage.getItem('@HappyAuth:user');
 
-  //     console.log(userStorage);
-
-  //     console.log(user);
-  //     console.log(signed);
-  //   }
-  //  }
-  //  loadStorageData();
-  // }, [])
-
-  // const [signed, setSigned] = useState(false);
-  // const [user, setUser] = useState({});
-
-  function isSigned(): boolean {
-    const tokenStorage = localStorage.getItem('@HappyAuth:token');
-    const userStorage = localStorage.getItem('@HappyAuth:user');
-
-    if(tokenStorage && userStorage) {
-      return true;
-    }
-    return false;
-  }
-
-  function getUser(): object {
-    const tokenStorage = localStorage.getItem('@HappyAuth:token');
-    const userStorage = localStorage.getItem('@HappyAuth:user');
-
-    if(tokenStorage && userStorage) {
-      return JSON.parse(userStorage);
-    }
-    return {};
-  }
+      const tokenSessionStorage = sessionStorage.getItem('@HappyAuth:token');
+      const userSessionStorage = sessionStorage.getItem('@HappyAuth:user');
+      
+      if(tokenLocalStorage && userLocalStorage) {
+        await api.post('authenticate-token', { token: tokenLocalStorage });
+        setUser(userLocalStorage);
+        setSigned(true);
+      } else if (tokenSessionStorage && userSessionStorage) {
+        setUser(userSessionStorage);
+        setSigned(true);
+      }
+   }
+   loadStorageData();
+  })
 
   async function sign(email: string, password: string, rememberMe: boolean) {
+
     const { user, token } = await auth.login(email, password);
 
     if(rememberMe) {
       localStorage.setItem('@HappyAuth:user', JSON.stringify(user));
       localStorage.setItem('@HappyAuth:token', token);
+    } else {
+      sessionStorage.setItem('@HappyAuth:user', JSON.stringify(user));
+      sessionStorage.setItem('@HappyAuth:token', token);
     }
+    setSigned(true);
+    history.push('/dashboard');
   }
 
   function signOut() {
     localStorage.clear();
+    sessionStorage.clear();
+    setSigned(false);
+    setUser({});
+    history.push('/login');
   }
 
   return (
-    <AuthContext.Provider value={{ signed: isSigned(), sign, user: getUser(), signOut }}>  
+    <AuthContext.Provider value={{ signed, sign, user, signOut }}>  
         {children}
     </AuthContext.Provider>
   );
+
 }
 
 export function useAuth() {
