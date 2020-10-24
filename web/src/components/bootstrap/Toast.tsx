@@ -13,7 +13,7 @@ const ToastComponent: React.FC<ToastProps> = ({ title, text, color, callback }) 
   return (
     <Toast
       style={{
-        position: 'absolute',
+        position: 'fixed',
         top: 20,
         right: 20,
         width: '100%',

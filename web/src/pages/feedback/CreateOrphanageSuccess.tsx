@@ -3,8 +3,16 @@ import React from 'react';
 import '../../styles/pages/feedback/create-orphanage-success.css';
 
 import SuccessImg from '../../images/create-success.svg';
+import { useHistory } from 'react-router-dom';
 
 const CreateOrphanageSuccess = () => {
+
+  const history = useHistory()
+
+  function handleToMapPage() {
+    history.push('/app');
+  }
+
   return (
     <div id="create-orphanage-success">
 
@@ -17,7 +25,7 @@ const CreateOrphanageSuccess = () => {
           Agora é só esperar :)
         </p>
 
-        <button>
+        <button onClick={handleToMapPage}>
           Voltar para o mapa
         </button>
       </div>

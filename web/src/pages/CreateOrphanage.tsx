@@ -2,6 +2,7 @@ import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import InputMask from 'react-input-mask';
+import Toast from '../components/bootstrap/Toast';
 
 import { FiPlus } from "react-icons/fi";
 
@@ -28,6 +29,8 @@ export default function CreateOrphanage() {
   const [open_on_weekends, setOpen_on_weekends] = useState(false);
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [showMsgError, setShowMsgError] = useState(false); 
+  const [msgError, setMsgError] = useState(''); 
 
   const [disableButton, setDisableButton] = useState(true);
 
@@ -72,10 +75,10 @@ export default function CreateOrphanage() {
 
     try {
       await api.post('orphanages', data);
-      alert('Cadastro realizado com sucesso!');
-      history.push('/app');
-    } catch (e) {
-      console.log(e);
+      history.push('/orphanage-created');
+    } catch (err) {
+      setMsgError(err.response.data.message);
+      setShowMsgError(true);
     }
   }
 
@@ -99,6 +102,15 @@ export default function CreateOrphanage() {
     <div id="page-create-orphanage">
 
       <Sidebar dashboard={false}/>
+
+      { showMsgError && (
+          <Toast
+            color="#FF669D"
+            title="Erro!"
+            text={msgError}
+            callback={callback => setShowMsgError(callback)}
+          /> 
+        )}
       
       <main>
         <form onSubmit={handleSubmit} className="create-orphanage-form">

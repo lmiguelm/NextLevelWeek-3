@@ -4,6 +4,7 @@ import OrphanageView from '../views/OrphanagesView';
 import * as Yup from 'yup';
 
 import Orphanages from '../models/Orphanage';
+import ValidationException from '../errors/ValidationException';
 
 interface Data {
     name: string;
@@ -61,64 +62,72 @@ export default {
     },
 
     async create(req: Request, res: Response) {
+        try {
+            const { 
+                name,
+                latitude, 
+                longitude, 
+                about, 
+                instructions, 
+                opening_hours, 
+                open_on_weekends,
+                pending,
+                whatsapp
+            } = req.body;
+            
+            if(isNaN(whatsapp)) {
+                throw new ValidationException('Whatsapp inválido', 400);
+            }
     
-        const { 
-            name,
-            latitude, 
-            longitude, 
-            about, 
-            instructions, 
-            opening_hours, 
-            open_on_weekends,
-            pending,
-            whatsapp
-        } = req.body;
+            const orphanagesRepository = getRepository(Orphanages);
     
-        const orphanagesRepository = getRepository(Orphanages);
-
-        const requestImages = req.files as Express.Multer.File[];
-        const images = requestImages.map(image => {
-            return { path: image.filename }
-        });
-
-        const data: Data = {
-            name,
-            latitude, 
-            longitude, 
-            about, 
-            instructions, 
-            opening_hours, 
-            open_on_weekends: open_on_weekends === 'true' ? true : false,
-            images,
-            whatsapp,
-            pending: pending === 'true' ? true : false,
-        };
-
-        const schema = Yup.object().shape({
-            name: Yup.string().required('Nome obrigatório'),
-            latitude: Yup.number().required(),
-            longitude: Yup.number().required(),
-            about: Yup.string().required().max(300),
-            opening_hours: Yup.string().required(),
-            open_on_weekends: Yup.boolean().required(),
-            pending: Yup.boolean().required(),
-            whatsapp: Yup.number().required(),
-            images: Yup.array(Yup.object().shape({
-                path: Yup.string().required()
-            }))
-        });
-
-        const finalData = schema.cast(data);
-
-        await schema.validate(data, {
-            abortEarly: false
-        });
+            const requestImages = req.files as Express.Multer.File[];
+            const images = requestImages.map(image => {
+                return { path: image.filename }
+            });
     
-        const orphanage = orphanagesRepository.create(data);
+            const data: Data = {
+                name,
+                latitude, 
+                longitude, 
+                about, 
+                instructions, 
+                opening_hours, 
+                open_on_weekends: open_on_weekends === 'true' ? true : false,
+                images,
+                whatsapp,
+                pending: pending === 'true' ? true : false,
+            };
     
-        await orphanagesRepository.save(orphanage);
     
-       return res.status(201).json(orphanage);
+            const schema = Yup.object().shape({
+                name: Yup.string().required('Nome obrigatório'),
+                latitude: Yup.number().required(),
+                longitude: Yup.number().required(),
+                about: Yup.string().required().max(300),
+                opening_hours: Yup.string().required(),
+                open_on_weekends: Yup.boolean().required(),
+                pending: Yup.boolean().required(),
+                whatsapp: Yup.number().required(),
+                images: Yup.array(Yup.object().shape({
+                    path: Yup.string().required()
+                }))
+            });
+    
+            const finalData = schema.cast(data);
+    
+            await schema.validate(data, {
+                abortEarly: false
+            });
+        
+            const orphanage = orphanagesRepository.create(data);
+        
+            await orphanagesRepository.save(orphanage);
+        
+           return res.status(201).json(orphanage);
+        } catch (e) {
+            return res.status(e.status).json(e);
+        }
     },
 
     async edit(req: Request, res: Response) {
