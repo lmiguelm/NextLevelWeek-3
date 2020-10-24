@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, ChangeEvent } from "react";
+import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 
@@ -26,6 +26,16 @@ export default function CreateOrphanage() {
   const [open_on_weekends, setOpen_on_weekends] = useState(false);
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+
+  const [disableButton, setDisableButton] = useState(true);
+
+  useEffect(() => {
+    if(name == '' || about == '' || instructions == '' || opening_hours == '' || position.latitude == 0 || position.longitude == 0) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [name, about, instructions, opening_hours, position]);
   
 
   function handleMapClick(event: LeafletMouseEvent) {
@@ -151,13 +161,26 @@ export default function CreateOrphanage() {
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
 
               <div className="button-select">
-                <button type="button" onClick={() => setOpen_on_weekends(true)} className={open_on_weekends ? 'active' : ''}>Sim</button>
-                <button type="button" onClick={() => setOpen_on_weekends(false)} className={!open_on_weekends ? 'active' : ''} >Não</button>
+                <button
+                  type="button" 
+                  onClick={() => setOpen_on_weekends(true)} 
+                  className={open_on_weekends ? 'active-true' : ''}
+                >
+                  Sim
+                </button>
+
+                <button 
+                  type="button" 
+                  onClick={() => setOpen_on_weekends(false)} 
+                  className={!open_on_weekends ? 'active-false' : ''} 
+                >
+                  Não
+                </button>
               </div>
             </div>
           </fieldset>
 
-          <ButtonForm text="Enviar"/>
+          <ButtonForm disabled={disableButton} text="Enviar"/>
         </form>
       </main>
     </div>
