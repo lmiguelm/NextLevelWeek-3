@@ -1,4 +1,4 @@
-import React, {useState, FormEvent, ChangeEvent} from 'react';
+import React, {useState, FormEvent, ChangeEvent, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { FiCheck } from 'react-icons/fi';
 
@@ -8,8 +8,10 @@ import Wallpaper from '../components/Wallpaper';
 import BackButton from '../components/BackButton';
 import Input from '../components/form/Input';
 import ButtonForm from '../components/form/Button';
+import Toast from '../components/bootstrap/Toast';
 
 import { useAuth } from '../contexts/auth';
+import { validateEmail } from '../utils/email';
 
 export default function Login() {
 
@@ -18,22 +20,26 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
+  const [showMsgError, setShowMsgError] = useState(false); 
+  const [msgError, setMsgError] = useState(''); 
+  const [disableButton, setDisableButton] = useState(true);
+
+  useEffect(() => {
+    if(!validateEmail(email) || password.length < 5) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [password, email])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-
     try {
-      sign(email, password, remember);
+      await sign(email, password, remember);
     } catch (err) {
-      console.log(err);
-    }
-
-
-    console.log({
-      email,
-      password,
-      remember
-    });
+      setMsgError(err);
+      setShowMsgError(true);
+    } 
   }
 
   return (
@@ -42,11 +48,21 @@ export default function Login() {
       <Wallpaper/>
   
       <main>
-        
+      
         <BackButton/>
-       
+
+        { showMsgError && (
+          <Toast
+            color="#FF669D"
+            title="Erro!"
+            text={msgError}
+            callback={callback => setShowMsgError(callback)}
+          /> 
+        )}
+      
         <form onSubmit={handleSubmit} className="login-form">
-          <h2>Fazer login</h2>
+
+          <h2 onClick={() => setShowMsgError(true)}>Fazer login</h2>
 
           <Input
             id="email"
@@ -82,7 +98,7 @@ export default function Login() {
             <Link to="/forgot-password">Esqueci minha senha</Link>
           </div>
 
-          <ButtonForm text="Entrar"/>
+          <ButtonForm disabled={disableButton} text="Entrar"/>
         </form>     
       </main>
     </div>

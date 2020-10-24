@@ -1,4 +1,4 @@
-import React, {createContext, useState, useEffect, useContext} from 'react';
+import React, {createContext, useState, useEffect, useContext, ReactElement} from 'react';
 
 import * as auth from '../services/auth';
 
@@ -16,7 +16,7 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 
-export const AuthProvider: React.FC = ({ children }): any => {
+export const AuthProvider: React.FC = ({ children }): ReactElement => {
 
   const [user, setUser] = useState({});
   const [signed, setSigned] = useState(false);
