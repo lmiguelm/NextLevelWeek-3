@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 
 import Wallpaper from '../components/Wallpaper';
 import BackButton from '../components/BackButton';
@@ -7,10 +7,21 @@ import FormButton from '../components/form/Button';
 
 
 import '../styles/pages/forgot-password.css';
+import { validateEmail } from '../utils/email';
 
 const ForgotPassword = () => {
 
   const [email, setEmail] = useState('');
+  const [disableButton, setDisableButton] = useState(true);
+
+
+  useEffect(() => {
+    if(!validateEmail(email)) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [email]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -40,7 +51,7 @@ const ForgotPassword = () => {
             <label htmlFor="email">E-mail</label>
           </Input>
 
-          <FormButton text="Enviar"/>
+          <FormButton disabled={disableButton} text="Enviar"/>
         </form>
       </main>
     </div>

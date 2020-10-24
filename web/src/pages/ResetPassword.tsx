@@ -1,4 +1,4 @@
-import React, {useState, FormEvent, ChangeEvent } from 'react';
+import React, {useState, FormEvent, ChangeEvent, useEffect } from 'react';
 
 import Wallpaper from '../components/Wallpaper';
 import Input from '../components/form/Input';
@@ -10,6 +10,15 @@ const ResetPassword = () => {
 
   const [newPassword, setNewPassword] = useState('');
   const [newPassword2, setNewPassword2] = useState('');
+  const [disableButton, setDisableButton] = useState(true);
+
+  useEffect(() => {
+    if(newPassword.length < 5 || newPassword !== newPassword2) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [newPassword, newPassword2]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -43,13 +52,14 @@ const ResetPassword = () => {
 
           <Input
             id="newPass2"
+            type="password"
             value={newPassword2}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword2(e.target.value)}
           >
             <label htmlFor="newPass2">Repetir senha: </label>
           </Input>
 
-          <FormButton text="Enviar"/>
+          <FormButton disabled={disableButton} text="Enviar"/>
         </form>
       </main>
     </div>
