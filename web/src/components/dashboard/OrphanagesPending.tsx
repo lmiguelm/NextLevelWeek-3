@@ -38,7 +38,10 @@ const OrphanagesPending = () => {
   if(orphanages.length === 0) {
     return (
       <div id="orphanages-page-not-orphanages">
-        <h2>Orfanatos Pendentes</h2>
+         <div className="text-container">
+          <h2>Orfanatos Pendentes</h2>
+          <span>{orphanages.length} Orfanato(s)</span>
+         </div>
         <hr/>
         <main>
           <img src={LogoOff} alt="Happy"/>

@@ -2,6 +2,13 @@ div#orphanages-page, div#orphanages-page-not-orphanages {
   padding: 64px 208px;
 }
 
+div#orphanages-page .text-container, div#orphanages-page-not-orphanages .text-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
 div#orphanages-page .text-container {
   display: flex;
   justify-content: space-between;
@@ -9,14 +16,14 @@ div#orphanages-page .text-container {
   margin-bottom: 30px;
 }
 
-div#orphanages-page .text-container h2, div#orphanages-page-not-orphanages h2 {
+div#orphanages-page .text-container h2, div#orphanages-page-not-orphanages .text-container h2 {
   font-size: 32px;
   font-weight: 700;
   color: #4D6F80;
   line-height: 34px;
 }
 
-div#orphanages-page .text-container span {
+div#orphanages-page .text-container span, div#orphanages-page-not-orphanages .text-container span  {
   font-size: 16px;
   font-weight: 600;
   color: #8FA7B2;
