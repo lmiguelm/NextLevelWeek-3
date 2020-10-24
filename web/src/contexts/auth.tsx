@@ -29,12 +29,15 @@ export const AuthProvider: React.FC = ({ children }): ReactElement => {
 
       const tokenSessionStorage = sessionStorage.getItem('@HappyAuth:token');
       const userSessionStorage = sessionStorage.getItem('@HappyAuth:user');
-      
+
       if(tokenLocalStorage && userLocalStorage) {
         await api.post('authenticate-token', { token: tokenLocalStorage });
+        api.defaults.headers.Authorization = tokenLocalStorage;
         setUser(userLocalStorage);
         setSigned(true);
       } else if (tokenSessionStorage && userSessionStorage) {
+        await api.post('authenticate-token', { token: tokenLocalStorage });
+        api.defaults.headers.Authorization = tokenSessionStorage;
         setUser(userSessionStorage);
         setSigned(true);
       }

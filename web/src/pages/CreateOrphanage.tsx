@@ -66,6 +66,7 @@ export default function CreateOrphanage() {
     data.append('longitude', String(longitude));
     data.append('instructions', instructions);
     data.append('opening_hours', opening_hours);
+    data.append('pending', String(true));
     data.append('whatsapp', String(whatsapp.replace('(', '').replace(')', '').replace('+', '').replace('-', '').replace(' ', '').replace(' ', '')));
     data.append('open_on_weekends', String(open_on_weekends));
 
