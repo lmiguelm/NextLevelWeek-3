@@ -36,7 +36,7 @@ export const AuthProvider: React.FC = ({ children }): ReactElement => {
         setUser(userLocalStorage);
         setSigned(true);
       } else if (tokenSessionStorage && userSessionStorage) {
-        await api.post('authenticate-token', { token: tokenLocalStorage });
+        await api.post('authenticate-token', { token: tokenSessionStorage });
         api.defaults.headers.Authorization = tokenSessionStorage;
         setUser(userSessionStorage);
         setSigned(true);
@@ -63,6 +63,7 @@ export const AuthProvider: React.FC = ({ children }): ReactElement => {
   function signOut() {
     localStorage.clear();
     sessionStorage.clear();
+    api.defaults.headers.Authorization = '';
     setSigned(false);
     setUser({});
     history.push('/login');
