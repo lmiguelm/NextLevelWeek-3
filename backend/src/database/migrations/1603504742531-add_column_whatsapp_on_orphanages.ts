@@ -1,17 +1,18 @@
 import {MigrationInterface, QueryRunner, TableColumn} from "typeorm";
 
-export class changeOrphanages1603315453276 implements MigrationInterface {
+export class addColumnWhatsappOnOrphanages1603504742531 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.addColumn('orphanages', new TableColumn({
-            name: 'pending',
-            type: 'boolean',
-            default: true
+            name: 'whatsapp',
+            type: 'number',
+            isNullable: true,
+            default: null,
         }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropColumn('orphanages', 'pending');
+        await queryRunner.dropColumn('orphanages', 'whatsapp');
     }
 
 }

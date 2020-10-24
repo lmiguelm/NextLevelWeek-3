@@ -9,6 +9,7 @@ interface Data {
     name: string;
     latitude: number; 
     longitude: number;
+    whatsapp: number;
     about: string;
     instructions: string;
     opening_hours: string;
@@ -69,7 +70,8 @@ export default {
             instructions, 
             opening_hours, 
             open_on_weekends,
-            pending
+            pending,
+            whatsapp
         } = req.body;
     
         const orphanagesRepository = getRepository(Orphanages);
@@ -88,6 +90,7 @@ export default {
             opening_hours, 
             open_on_weekends: open_on_weekends === 'true' ? true : false,
             images,
+            whatsapp,
             pending: pending === 'true' ? true : false,
         };
 
@@ -99,6 +102,7 @@ export default {
             opening_hours: Yup.string().required(),
             open_on_weekends: Yup.boolean().required(),
             pending: Yup.boolean().required(),
+            whatsapp: Yup.number().required(),
             images: Yup.array(Yup.object().shape({
                 path: Yup.string().required()
             }))
@@ -129,7 +133,8 @@ export default {
             instructions, 
             opening_hours, 
             open_on_weekends,
-            pending
+            pending,
+            whatsapp
         } = req.body;
     
         const orphanagesRepository = getRepository(Orphanages);
@@ -148,6 +153,7 @@ export default {
             opening_hours, 
             open_on_weekends: open_on_weekends === 'true' ? true : false,
             images,
+            whatsapp,
             pending: pending === 'true' ? true : false,
         };
 
@@ -159,6 +165,7 @@ export default {
             opening_hours: Yup.string().required(),
             open_on_weekends: Yup.boolean().required(),
             pending: Yup.boolean().required(),
+            whatsapp: Yup.number().required(),
             images: Yup.array(Yup.object().shape({
                 path: Yup.string().required()
             }))
@@ -178,6 +185,7 @@ export default {
         orphanage.opening_hours = data.opening_hours;
         orphanage.open_on_weekends = data.open_on_weekends;
         orphanage.pending = data.pending;
+        orphanage.whatsapp = data.whatsapp;
         // orphanage.images = data.images;
 
         await orphanagesRepository.save(orphanage);
