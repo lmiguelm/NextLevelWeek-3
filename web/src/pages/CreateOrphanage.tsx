@@ -1,6 +1,7 @@
 import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
+import InputMask from 'react-input-mask';
 
 import { FiPlus } from "react-icons/fi";
 
@@ -23,6 +24,7 @@ export default function CreateOrphanage() {
   const [about, setAbout] = useState('');
   const [instructions, setInstructions] = useState('');
   const [opening_hours, setOpening_hours] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
   const [open_on_weekends, setOpen_on_weekends] = useState(false);
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
@@ -30,12 +32,12 @@ export default function CreateOrphanage() {
   const [disableButton, setDisableButton] = useState(true);
 
   useEffect(() => {
-    if(name == '' || about == '' || instructions == '' || opening_hours == '' || position.latitude == 0 || position.longitude == 0) {
+    if(name == '' || about == '' || instructions == '' || opening_hours == '' || position.latitude == 0 || position.longitude == 0 || whatsapp == '') {
       setDisableButton(true);
     } else {
       setDisableButton(false);
     }
-  }, [name, about, instructions, opening_hours, position]);
+  }, [name, about, instructions, opening_hours, position, whatsapp]);
   
 
   function handleMapClick(event: LeafletMouseEvent) {
@@ -61,6 +63,7 @@ export default function CreateOrphanage() {
     data.append('longitude', String(longitude));
     data.append('instructions', instructions);
     data.append('opening_hours', opening_hours);
+    data.append('whatsapp', String(whatsapp.replace('(', '').replace(')', '').replace('+', '').replace('-', '').replace(' ', '').replace(' ', '')));
     data.append('open_on_weekends', String(open_on_weekends));
 
     images.forEach(image => {
@@ -70,7 +73,7 @@ export default function CreateOrphanage() {
     try {
       await api.post('orphanages', data);
       alert('Cadastro realizado com sucesso!');
-      history.push('/app');
+      // history.push('/app');
     } catch (e) {
       console.log(e);
     }
@@ -123,6 +126,11 @@ export default function CreateOrphanage() {
             <div className="input-block">
               <label htmlFor="about">Sobre <span>Máximo de 300 caracteres</span></label>
               <textarea id="about" value={about} onChange={e => setAbout(e.target.value)} maxLength={300} />
+            </div>
+
+            <div className="input-block">
+              <label htmlFor="name">WhatsApp</label>
+              <InputMask mask="+99 (99) 9999-99999" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
             </div>
 
             <div className="input-block">
