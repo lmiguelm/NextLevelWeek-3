@@ -38,7 +38,7 @@ export default {
       userId = user.id;
       u = user;
     } catch (err) {
-      throw new ValidationException('E-mail inválida!', 400);
+      throw new ValidationException('E-mail inválido!', 400);
     }
     
     if(!await this.decrypt(passwordReq, userId)) {
