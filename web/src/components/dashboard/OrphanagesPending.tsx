@@ -10,6 +10,8 @@ import mapIcon from '../../utils/mapIcon';
 
 import api from '../../services/api';
 
+import OrphanageChecked from '../OrphanageChecked';
+
 interface Orphanage {
   latitude: number;
   longitude: number;
@@ -20,6 +22,7 @@ interface Orphanage {
 const OrphanagesPending = () => {
 
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+  const [approved, setApproved] = useState(false);
 
   useEffect(() => {
     async function loadOrphanages() {
@@ -32,10 +35,12 @@ const OrphanagesPending = () => {
   async function handleApprovedOrphanage(id: number) {
     await api.post(`approved-orphanages/${id}`);
     setOrphanages(orphanages.filter(o => o.id !== id));
-    alert('Orfanato aprovado com sucesso!');
+    setApproved(true);
   }
 
-  if(orphanages.length === 0) {
+  if(approved) {
+    return <OrphanageChecked/>
+  } else if(orphanages.length === 0) {
     return (
       <div id="orphanages-page-not-orphanages">
          <div className="text-container">
