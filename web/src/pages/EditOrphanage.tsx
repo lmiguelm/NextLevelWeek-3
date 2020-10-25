@@ -1,9 +1,9 @@
 import React, {useState, useEffect, FormEvent, ChangeEvent} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiX } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { LeafletMouseEvent } from 'leaflet';
-
+import InputMask from 'react-input-mask';
 
 import mapIcon from '../utils/mapIcon';
 
@@ -25,6 +25,7 @@ interface Orphanage {
   longitude: number;
   opening_hours: string;
   open_on_weekends: boolean;
+  whatsapp: string;
   images: Array<{
     url: string;
     id: number;
@@ -44,6 +45,7 @@ const EditOrphanage = ( ) => {
 
   const history = useHistory();
   const params = useParams<OrphanageParams>();
+  const [disableButton, setDisableButton] = useState(false);
 
   const [orphanage, setOrphanage] = useState<Orphanage>({
     id: 0,
@@ -54,6 +56,7 @@ const EditOrphanage = ( ) => {
     longitude: 0,
     opening_hours: '',
     open_on_weekends: false,
+    whatsapp: '',
     images: []
   });
 
@@ -83,7 +86,29 @@ const EditOrphanage = ( ) => {
       } 
     }
     loadOrphanage();
-  }, []);
+  }, [params.id]);
+
+
+  useEffect(() => {
+    const {
+      name,
+      about,
+      instructions,
+      latitude,
+      longitude,
+      opening_hours,
+      whatsapp,
+      images,
+    } = orphanage;
+
+    console.log(images.length);
+
+    if(name === '' || about === '' || instructions === '' || opening_hours === '' || latitude === 0 || longitude === 0 || whatsapp === '' || previewImages.length == 0) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [orphanage, previewImages]);
 
 
   async function handleSubmit(event: FormEvent) {
@@ -115,6 +140,14 @@ const EditOrphanage = ( ) => {
       latitude: lat,
       longitude: lng
     });
+  }
+
+  function handleDeletePreviewImage(image: string) {
+    setPreviewImages(
+      previewImages.filter(img => {
+        return img !== image
+      })
+    );
   }
 
   if(loading) {
@@ -156,6 +189,11 @@ const EditOrphanage = ( ) => {
                 <label htmlFor="about">Sobre <span>Máximo de 300 caracteres</span></label>
                 <textarea id="about" value={orphanage.about} onChange={e => setOrphanage({ ...orphanage, about: e.target.value})} maxLength={300} />
               </div>
+
+              <div className="input-block">
+                <label htmlFor="name">WhatsApp</label>
+                <InputMask mask="+99 (99) 9999-99999" value={orphanage.whatsapp} onChange={e => setOrphanage({ ...orphanage, whatsapp: e.target.value})} />
+              </div>
   
               <div className="input-block">
                 <label htmlFor="images">Fotos</label>
@@ -163,7 +201,12 @@ const EditOrphanage = ( ) => {
                 <div className="images-container">
                   {previewImages.map(image => {
                     return (
-                      <img key={image} src={image} alt={orphanage.name}/>
+                      <div key={image}>
+                        <span onClick={() => handleDeletePreviewImage(image)}>
+                          <FiX size={24} color="#FF669D" />
+                        </span>
+                        <img src={image} alt={orphanage.name}/>
+                      </div>
                     );
                   })}
                   <label htmlFor="image[]" className="new-image">
@@ -196,13 +239,26 @@ const EditOrphanage = ( ) => {
                 <label htmlFor="open_on_weekends">Atende fim de semana</label>
   
                 <div className="button-select">
-                  <button type="button" onClick={() => setOrphanage({ ...orphanage, open_on_weekends: true})} className={orphanage.open_on_weekends ? 'active' : ''}>Sim</button>
-                  <button type="button" onClick={() => setOrphanage({ ...orphanage, open_on_weekends: true})} className={!orphanage.open_on_weekends ? 'active' : ''} >Não</button>
-                </div>
+                <button
+                  type="button" 
+                  onClick={() => setOrphanage({...orphanage, open_on_weekends: true})} 
+                  className={orphanage.open_on_weekends ? 'active-true' : ''}
+                >
+                  Sim
+                </button>
+
+                <button 
+                  type="button" 
+                  onClick={() => setOrphanage({...orphanage, open_on_weekends: false})} 
+                  className={!orphanage.open_on_weekends ? 'active-false' : ''} 
+                >
+                  Não
+                </button>
+              </div>
               </div>
             </fieldset>
             
-            <ButtonForm text="Confirmar" />
+            <ButtonForm disabled={disableButton} text="Confirmar" />
            
           </form>
         </main>

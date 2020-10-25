@@ -4,7 +4,7 @@ import { LeafletMouseEvent } from 'leaflet';
 import InputMask from 'react-input-mask';
 import Toast from '../components/bootstrap/Toast';
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiX } from "react-icons/fi";
 
 import '../styles/pages/create-orphanage.css';
 
@@ -35,12 +35,12 @@ export default function CreateOrphanage() {
   const [disableButton, setDisableButton] = useState(true);
 
   useEffect(() => {
-    if(name == '' || about == '' || instructions == '' || opening_hours == '' || position.latitude == 0 || position.longitude == 0 || whatsapp == '') {
+    if(name === '' || about === '' || instructions === '' || opening_hours === '' || position.latitude === 0 || position.longitude === 0 || whatsapp === '' || previewImages.length == 0) {
       setDisableButton(true);
     } else {
       setDisableButton(false);
     }
-  }, [name, about, instructions, opening_hours, position, whatsapp]);
+  }, [name, about, instructions, opening_hours, position, whatsapp, previewImages, images]);
   
 
   function handleMapClick(event: LeafletMouseEvent) {
@@ -99,6 +99,14 @@ export default function CreateOrphanage() {
     setPreviewImages(imgs);
   }
 
+  function handleDeletePreviewImage(image: string) {
+    setPreviewImages(
+      previewImages.filter(img => {
+        return img !== image
+      })
+    );
+  }
+
   return (
     <div id="page-create-orphanage">
 
@@ -152,7 +160,12 @@ export default function CreateOrphanage() {
               <div className="images-container">
                 {previewImages.map(image => {
                   return (
-                    <img key={image} src={image} alt={name}/>
+                    <div key={image}>
+                      <span onClick={() => handleDeletePreviewImage(image)}>
+                        <FiX size={24} color="#FF669D" />
+                      </span>
+                      <img src={image} alt={name}/>
+                    </div>
                   );
                 })}
                 <label htmlFor="image[]" className="new-image">

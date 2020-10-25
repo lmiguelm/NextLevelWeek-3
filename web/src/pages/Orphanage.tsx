@@ -125,7 +125,7 @@ export default function Orphanage() {
               )}
             </div>
 
-            <a href={`https://wa.me/${orphanage.whatsapp}`} target="_blank" type="button" className="contact-button">
+            <a href={`https://wa.me/${orphanage.whatsapp}`} rel="noopener noreferrer" target="_blank" type="button" className="contact-button">
               <FaWhatsapp size={20} color="#FFF" />
               Entrar em contato
             </a>
