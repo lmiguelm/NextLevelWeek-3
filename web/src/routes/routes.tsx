@@ -80,7 +80,7 @@ export default function Routes() {
           <Route path="/orphanage-edit/:id" component={EditOrphanage} />
 
           <Route path="/orphanage-created" component={CreateOrphanageSuccess} />
-          <Route path="/orphanage-deleted" component={DeleteOrphanageSuccess} />
+          <Route path="/orphanage-deleted/:id" component={DeleteOrphanageSuccess} />
 
           <Route  path="*" component={NotFound} />
       </Switch>

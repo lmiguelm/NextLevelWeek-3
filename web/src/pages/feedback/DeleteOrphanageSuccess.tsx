@@ -5,8 +5,27 @@ import '../../styles/pages/feedback/delete-orphanage-success.css';
 import BackButton from '../../components/BackButton';
 
 import SuccessImg from '../../images/delete-success.svg';
+import { useHistory, useParams } from 'react-router-dom';
+import api from '../../services/api';
+
+interface OrphanageParams {
+  id: string;
+}
 
 const DeleteOrphanageSuccess = () => {
+
+  const { id } = useParams<OrphanageParams>();
+  const history = useHistory();
+
+  async function handleDeteOrphanage() {
+    try {
+      await api.delete(`orphanage-delete/${id}`);
+      history.push('/dashboard');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div id="delete-orphanage-success">
 
@@ -20,7 +39,7 @@ const DeleteOrphanageSuccess = () => {
           excluir Orf. Esperança?
         </p>
 
-        <button>
+        <button onClick={handleDeteOrphanage}>
          Confirmar
         </button>
       </div>

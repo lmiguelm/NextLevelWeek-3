@@ -208,5 +208,12 @@ export default {
         const orphanagesRepository = getRepository(Orphanages);
         await orphanagesRepository.update(id, { pending: false });
         return res.send();
+    },
+
+    async delete(req: Request, res: Response) {
+        const { id } = req.params;
+        const orphanagesRepository = getRepository(Orphanages);
+        await orphanagesRepository.delete(id);
+        return res.send();
     }
 };

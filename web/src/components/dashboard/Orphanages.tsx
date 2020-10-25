@@ -9,7 +9,7 @@ import mapIcon from '../../utils/mapIcon';
 import LogoOff from '../../images/logo-off.svg';
 
 import api from '../../services/api';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 interface Orphanage {
   latitude: number;
@@ -20,6 +20,8 @@ interface Orphanage {
 
 const Orphanages = () => {
 
+  const history = useHistory();
+
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
   useEffect(() => {
@@ -29,6 +31,14 @@ const Orphanages = () => {
     }
     loadOrphanages();
   }, []);
+
+  function handleEditOrphanage(id: number) {
+    history.push(`orphanage-edit/${id}`);
+  }
+
+  function handleDeleteOrphanage(id: number) {
+    history.push(`orphanage-deleted/${id}`);
+  }
 
 
   if(orphanages.length === 0) {
@@ -80,10 +90,10 @@ const Orphanages = () => {
                   <span>{orphanage.name}</span>
 
                   <div className="control-panel">
-                    <Link to={`orphanage-edit/${orphanage.id}`} style={{ marginRight: '10px' }}>
+                    <button onClick={() => handleEditOrphanage(orphanage.id)} style={{ marginRight: '10px' }}>
                       <FiEdit3 size={24} color="#15C3D6" />
-                    </Link>
-                    <button>
+                    </button>
+                    <button onClick={() => handleDeleteOrphanage(orphanage.id)}>
                       <FiTrash size={24} color="#15C3D6" />
                     </button>
                   </div>
